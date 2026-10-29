@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "netlist": "V1 in 0 5\nR1 in out 1k\nR2 out 0 1k",
+  "commands": "dc V1 0 5 1",
+  "requirements": [
+    {
+      "id": "vout-mid",
+      "metric": "dc_value",
+      "signal": "V(out)",
+      "operator": "approximately",
+      "target": 2.5,
+      "tolerance_percent": 2
+    }
+  ],
+  "output_dir": "runs/divider"
+}

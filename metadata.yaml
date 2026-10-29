@@ -1,0 +1,36 @@
+name: astrbot_plugin_multisim
+display_name: Multisim 电路仿真
+short_desc: 让 AI Agent 调用本机 NI Multisim 完成电路仿真实验
+desc: |
+  把本机 NI Multisim 14.3 变成 AstrBot Agent 的电路仿真工具。
+
+  能力：打开 .ms14 工程、枚举与修改元件参数、提交 DC / AC / 瞬态仿真、参数扫描、
+  读取测量值与验收结论、导出实验报告；15 个 LLM 工具 + /ms 控制台命令。
+
+  架构：插件 → multisim-mcp（MCP stdio）→ 32 位 COM Worker → Multisim，
+  32/64 位 COM、.ms14 编解码与任务队列交给上游，插件只维护领域工具面、
+  路径沙箱与统一结果契约。
+
+  需要 Windows + 已授权的 Multisim 14.3、multisim-mcp 与 32 位 Python + pywin32。
+version: 0.1.0
+author: "Nana7mi0721"
+repo: "https://github.com/Nana7mi0721/astrbot-multisim-connect"
+astrbot_version: ">=4.16,<5"
+social_link: "https://github.com/Nana7mi0721"
+tags:
+  - Multisim
+  - 电路仿真
+  - EDA
+  - SPICE
+  - MCP
+  - 自动化
+i18n:
+  en-US:
+    display_name: Multisim Circuit Simulation
+    short_desc: Let AI agents run NI Multisim circuit experiments on your desktop
+    desc: |
+      Turn a local NI Multisim 14.3 installation into simulation tooling for
+      AstrBot agents: open .ms14 designs, enumerate and edit components, run
+      DC / AC / transient analyses and parameter sweeps, read measurements and
+      acceptance results, and export reports. Ships 15 LLM tools plus a /ms
+      console command, and talks to Multisim through multisim-mcp over MCP stdio.

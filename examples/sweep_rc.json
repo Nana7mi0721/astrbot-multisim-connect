@@ -1,0 +1,10 @@
+{
+  "schema_version": 1,
+  "netlist": "V1 in 0 dc 5\nR1 in out {R}\nC1 out 0 1u",
+  "base_commands": "ac dec 20 1 100k",
+  "sweep": {
+    "parameter": "R",
+    "values": [100, 220, 470, 1000, 2200, 4700]
+  },
+  "output_dir": "runs/sweep_rc"
+}

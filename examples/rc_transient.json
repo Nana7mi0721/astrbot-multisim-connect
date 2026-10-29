@@ -1,0 +1,6 @@
+{
+  "schema_version": 1,
+  "netlist": "V1 in 0 pulse(0 5 0 1n 1n 10m 20m)\nR1 in out 1k\nC1 out 0 1u",
+  "commands": "tran 0 20m 0 10u",
+  "output_dir": "runs/rc_transient"
+}

@@ -1,0 +1,109 @@
+{
+  "backend": {
+    "type": "object",
+    "description": "Multisim 后端（multisim-mcp）",
+    "collapsed": true,
+    "items": {
+      "mode": {
+        "type": "string",
+        "description": "后端模式",
+        "default": "mcp_stdio",
+        "options": ["mcp_stdio", "fake"],
+        "hint": "`mcp_stdio` 启动 multisim-mcp；`fake` 仅用于界面/流程演示，不做真实仿真。"
+      },
+      "python": {
+        "type": "string",
+        "description": "启动 multisim-mcp 的 Python 解释器",
+        "default": "",
+        "hint": "留空使用 AstrBot 自带解释器。multisim-mcp 前端可用 64 位；COM worker 由 `MULTISIM_MCP_WORKER_PYTHON` 指定 32 位解释器。"
+      },
+      "args": {
+        "type": "list",
+        "description": "multisim-mcp 启动参数",
+        "default": ["-m", "multisim_mcp.server"]
+      },
+      "tool_profile": {
+        "type": "string",
+        "description": "multisim-mcp 工具轮廓",
+        "default": "full",
+        "options": ["full", "experiment", "optimization", "core"],
+        "hint": "插件对 Agent 只暴露 13 个领域工具；此选项决定上游服务端加载多少工具（原生电路编辑工具在 `full` 中）。"
+      },
+      "env": {
+        "type": "dict",
+        "description": "附加环境变量",
+        "default": {},
+        "hint": "常用：`MULTISIM_MCP_WORKER_PYTHON`（32 位 Python 路径）、`MULTISIM_MCP_TEMPLATE_DIR`（元件模板包目录）。"
+      },
+      "start_timeout_s": {
+        "type": "float",
+        "description": "后端启动超时（秒）",
+        "default": 30.0
+      }
+    }
+  },
+  "workspace_root": {
+    "type": "string",
+    "description": "工作目录（插件与 Agent 允许访问的路径根）",
+    "default": "",
+    "hint": "所有由模型提供的路径都会被限制在此目录内。留空则使用 `data/plugin_data/astrbot_plugin_multisim/workspace`。"
+  },
+  "timeouts": {
+    "type": "object",
+    "description": "超时设置",
+    "collapsed": true,
+    "items": {
+      "call_timeout_s": {
+        "type": "float",
+        "description": "单次后端调用超时（秒）",
+        "default": 60.0,
+        "slider": {"min": 5, "max": 600, "step": 5}
+      },
+      "job_poll_s": {
+        "type": "float",
+        "description": "任务轮询间隔（秒）",
+        "default": 2.0,
+        "slider": {"min": 0.5, "max": 30, "step": 0.5}
+      },
+      "job_timeout_s": {
+        "type": "float",
+        "description": "任务等待上限（秒）",
+        "default": 900.0,
+        "slider": {"min": 30, "max": 7200, "step": 30}
+      }
+    }
+  },
+  "features": {
+    "type": "object",
+    "description": "功能开关",
+    "items": {
+      "allow_component_edit": {
+        "type": "bool",
+        "description": "允许修改元件参数",
+        "default": true
+      },
+      "allow_sweep": {
+        "type": "bool",
+        "description": "允许参数扫描",
+        "default": true
+      },
+      "allow_unsafe_commands": {
+        "type": "bool",
+        "description": "允许上游执行任意 Nutmeg 命令文件（危险）",
+        "default": false,
+        "hint": "开启后会给 multisim-mcp 进程设置 `MULTISIM_MCP_ENABLE_UNSAFE_COMMANDS=1`。除非完全信任输入，否则不要开启。"
+      },
+      "auto_watch": {
+        "type": "bool",
+        "description": "`/ms run` 提交后自动跟踪并推送结果",
+        "default": true
+      }
+    }
+  },
+  "tool_map": {
+    "type": "dict",
+    "description": "后端工具名覆盖（高级）",
+    "default": {},
+    "hint": "键为领域工具键（如 `open_circuit`、`set_component_value`），值为上游工具名。留空则使用默认映射 + 启动时自动发现。"
+  }
+}
